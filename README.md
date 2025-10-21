@@ -354,3 +354,4 @@ print(f"Всего слов: {len(tokens)}\nУникальных слов: {len(
 for elm in top:
     print(f"{elm[0]}:{elm[1]}")
 ```
+![text_stats](/images/Lab03.%20Text_stats.png)
