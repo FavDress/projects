@@ -250,3 +250,107 @@ for invalid_rec in invalid_tests:
         print(f"Input {invalid_rec} вызвало ошибку: {e}")
 
 ```
+______________________________________________________________________________________________________________________________________
+LAB03
+
+
+```python
+import re
+
+def normalize(text: str, *, casefold: bool = True, yo2e: bool = True) -> str:
+
+    if casefold:
+        text = text.casefold()
+    if yo2e:
+        text = text.replace("ё", 'е').replace("Ё", "Е")
+
+    text = text.replace("\n", ' ').replace("\r", " ").replace("\t", " ")
+
+    result = text.split()
+    result = " ".join(result)
+
+    return result
+
+
+
+def tokenize(text: str) -> list[str]:
+    pattern = r"\w+(?:-\w+)*"
+    pattern = re.compile(pattern)
+    result = re.findall(pattern, text)
+
+    return result
+
+
+
+def count_freq(tokens: list[str]) -> dict[str, int]:
+    stats = {}
+
+    for word in tokens:
+        stats[word] = stats.get(word, 0) + 1
+
+    return stats
+
+
+
+
+def top_n(freq: dict[str, int], n: int = 5) -> list[tuple[str, int]]:
+    freq = list(freq.items())
+    freq.sort(key=lambda x: (-x[1], x[0]))
+    return freq[:n]
+```
+
+
+
+
+```python
+from text import normalize, top_n, count_freq, tokenize
+
+
+def test_normalize():
+    assert normalize("ПрИвЕт\nМИр\t") == "привет мир"
+    assert normalize("ёжик, Ёлка", yo2e=True) == "ежик, елка"
+    assert normalize("Hello\r\nWorld") == "hello world"
+    assert normalize( "  двойные   пробелы  ") == "двойные пробелы"
+
+def test_top_n():
+    assert top_n({"a":3,"b":2,"c":1}, n=2) == [("a",3), ("b",2)]
+    assert top_n({"aa":2,"bb":2,"cc":1}, n=2) == [("aa",2), ("bb",2)]
+
+
+def test_count_freq():
+    assert count_freq(["a","b","a","c","b","a"]) =={"a": 3, "b": 2, "c": 1}
+    assert count_freq(["bb","aa","bb","aa","cc"]) == {"aa": 2, "bb": 2, "cc": 1}
+
+def test_tokenize():
+    assert tokenize("привет мир") == ["привет", "мир"]
+    assert tokenize("hello,world!!!") == ["hello", "world"]
+    assert tokenize("по-настоящему круто") == ["по-настоящему", "круто"]
+    assert tokenize("2025 год") == ["2025", "год"]
+    assert tokenize("emoji 😀 не слово") == ["emoji", "не", "слово"]
+
+def main():
+    test_normalize()
+    test_top_n()
+    test_count_freq()
+    test_tokenize()
+
+if __name__ == "__main__":
+    main()
+```
+
+
+
+
+
+```python
+from  lib.text  import count_freq, top_n, normalize, tokenize
+
+data = input()
+data_normalized = normalize(data)
+tokens = tokenize(data_normalized)
+stats = count_freq(tokens)
+top = top_n(stats)
+print(f"Всего слов: {len(tokens)}\nУникальных слов: {len(stats)}\nТоп-5:")
+for elm in top:
+    print(f"{elm[0]}:{elm[1]}")
+```
