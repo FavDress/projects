@@ -542,3 +542,89 @@ OUT:
 ![OUTLL](/images/Lab05LL.png)
 ![OUTJSON](/images/Lab05JSON.png)
 ![OUTCH](/images/Lab05CH.png)
+____________________________________________________________________________________________________________________________________________________________________________
+LAB06
+```python
+import argparse
+from src.lab05.json_csv import json_to_csv, csv_to_json
+from src.lab05.csv_xlsx import csv_to_xlsx
+
+def add_command_parsers(com_parser):
+    com_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
+    com_parser.add_argument("--output", required=True, type=str, help="Путь к выходному файлу")
+
+
+parser = argparse.ArgumentParser(description="CLI для конвертации файлов")
+subparsers = parser.add_subparsers(dest="command")
+
+
+csv2json_parser = subparsers.add_parser("csv2json", help="Перевести csv в json")
+add_command_parsers(csv2json_parser)
+
+
+json2csv_parser = subparsers.add_parser("json2csv", help="Перевести json в csv")
+add_command_parsers(json2csv_parser)
+
+
+csv2xlsx_parser = subparsers.add_parser("csv2xlsx", help="Перевести csv в xlsx")
+add_command_parsers(csv2xlsx_parser)
+
+
+args = parser.parse_args()
+if args.command == "json2csv":
+    json_to_csv(args.input, args.output)
+elif args.command == "csv2json":
+    csv_to_json(args.input, args.output)
+elif args.command == "csv2xlsx":
+    csv_to_xlsx(args.input, args.output)
+
+```
+
+
+```python
+import argparse
+from src.lib.text import count_freq, top_n, normalize, tokenize
+
+parser = argparse.ArgumentParser(description="CLI для работы с текстовыми файлами")
+subparsers = parser.add_subparsers(dest="command")
+
+
+stats_parser = subparsers.add_parser("stats", help="Перевести csv в json")
+stats_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
+stats_parser.add_argument("--top", default=5, type=int, help="Сколько первых слов нужно")
+
+cat_parser = subparsers.add_parser("cat", help="Перевести json в csv")
+cat_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
+cat_parser.add_argument("-n", action="store_true", help="Использовать нумерацию или нет")
+
+
+args = parser.parse_args()
+if args.command == "stats":
+    with open(args.input, "r", encoding="utf-8") as f:
+        text = f.read()
+    text = normalize(text)
+    tokens = tokenize(text)
+    freq = count_freq(tokens)
+    if args.top:
+        freq = top_n(freq, args.top)
+    else:
+        freq = top_n(freq)
+    for (word, count) in freq:
+        print(f"{word}: {count}")
+elif args.command == "cat":
+    with open(args.input, "r", encoding="utf-8") as f:
+        for line_number, line in enumerate(f):
+            if args.n:
+                print(f"{line_number}: {line}", end="")
+            else:
+                print(line, end="")
+```
+
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.41.50 PM.png)
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.42.15 PM.png)
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.44.26 PM.png)
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.48.45 PM.png)
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.49.26 PM.png)
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.49.26 PM.png)
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.50.03 PM.png)
+![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%208.46.43 PM.png)
