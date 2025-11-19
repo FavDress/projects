@@ -5,11 +5,11 @@ parser = argparse.ArgumentParser(description="CLI для работы с тек�
 subparsers = parser.add_subparsers(dest="command")
 
 
-stats_parser = subparsers.add_parser("stats", help="Перевести csv в json")
+stats_parser = subparsers.add_parser("stats", help="Вывод топ слов")
 stats_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
 stats_parser.add_argument("--top", default=5, type=int, help="Сколько первых слов нужно")
 
-cat_parser = subparsers.add_parser("cat", help="Перевести json в csv")
+cat_parser = subparsers.add_parser("cat", help="Вывести содержимое файла")
 cat_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
 cat_parser.add_argument("-n", action="store_true", help="Использовать нумерацию или нет")
 

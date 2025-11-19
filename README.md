@@ -589,11 +589,11 @@ parser = argparse.ArgumentParser(description="CLI для работы с тек�
 subparsers = parser.add_subparsers(dest="command")
 
 
-stats_parser = subparsers.add_parser("stats", help="Перевести csv в json")
+stats_parser = subparsers.add_parser("stats", help="Вывод топ слов")
 stats_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
 stats_parser.add_argument("--top", default=5, type=int, help="Сколько первых слов нужно")
 
-cat_parser = subparsers.add_parser("cat", help="Перевести json в csv")
+cat_parser = subparsers.add_parser("cat", help="Вывести содержимое файла")
 cat_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
 cat_parser.add_argument("-n", action="store_true", help="Использовать нумерацию или нет")
 
@@ -619,12 +619,10 @@ elif args.command == "cat":
             else:
                 print(line, end="")
 ```
-
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.41.50 PM.png)
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.42.15 PM.png)
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.44.26 PM.png)
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.48.45 PM.png)
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.49.26 PM.png)
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.49.26 PM.png)
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%2010.50.03 PM.png)
-![HELP](/images/LAB06Снимок%20экрана%202025-11-18%20в%208.46.43 PM.png)
+![CLI_CONVERT](/images/LAB06:CLI_CONVERTСнимок%20экрана%202025-11-19%20в%2011.22.48 AM.png)
+![CLI_CONVERT](/images/LAB06:CLI_CONVERTСнимок%20экрана%202025-11-19%20в%2011.24.00 AM.png)
+![CLI_CONVERT](/images/LAB06:CLI_CONVERTСнимок%20экрана%202025-11-19%20в%2011.24.19 AM.png)
+![CLI_CONVERT](/images/LAB06:CLI_CONVERTСнимок%20экрана%202025-11-19%20в%2011.25.08 AM.png)
+![CLI_TEXT](/images/LAB06:CLI_TEXTСнимок%20экрана%202025-11-19%20в%2011.20.47 AM.png)
+![CLI_TEXT](/images/LAB06:CLI_TEXTСнимок%20экрана%202025-11-19%20в%2011.21.31 AM.png)
+![CLI_TEXT](/images/LAB06:CLI_TEXTСнимок%20экрана%202025-11-19%20в%2011.21.56 AM.png)
