@@ -2,9 +2,14 @@ import argparse
 from src.lab05.json_csv import json_to_csv, csv_to_json
 from src.lab05.csv_xlsx import csv_to_xlsx
 
+
 def add_command_parsers(com_parser):
-    com_parser.add_argument("--input", required=True, type=str, help="Путь к входному файлу")
-    com_parser.add_argument("--output", required=True, type=str, help="Путь к выходному файлу")
+    com_parser.add_argument(
+        "--input", required=True, type=str, help="Путь к входному файлу"
+    )
+    com_parser.add_argument(
+        "--output", required=True, type=str, help="Путь к выходному файлу"
+    )
 
 
 parser = argparse.ArgumentParser(description="CLI для конвертации файлов")

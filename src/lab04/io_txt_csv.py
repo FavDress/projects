@@ -9,7 +9,9 @@ def read_text(path: str | Path, encoding: str = "utf-8") -> str:
     return res
 
 
-def write_csv(rows: list[tuple | list], path: str | Path, header: tuple[str, ...] | None = None) -> None:
+def write_csv(
+    rows: list[tuple | list], path: str | Path, header: tuple[str, ...] | None = None
+) -> None:
     if len(rows) > 0:
         for elm in rows:
             if len(rows[0]) != len(elm):
@@ -20,10 +22,3 @@ def write_csv(rows: list[tuple | list], path: str | Path, header: tuple[str, ...
         if header is not None:
             wr.writerow(header)
         wr.writerows(rows)
-
-
-
-
-
-
-

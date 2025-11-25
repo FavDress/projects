@@ -11,7 +11,7 @@ top = top_n(stats)
 rows = list(stats.items())
 rows.sort(key=lambda x: (-x[1], x[0]))
 
-write_csv(rows, "lab04/data/report.csv", header=("word","count"))
+write_csv(rows, "lab04/data/report.csv", header=("word", "count"))
 
 print(f"Всего слов: {len(tokens)}\nУникальных слов: {len(stats)}\nТоп-5:")
 for elm in top:

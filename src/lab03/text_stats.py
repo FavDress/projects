@@ -1,4 +1,4 @@
-from  lib.text  import count_freq, top_n, normalize, tokenize
+from lib.text import count_freq, top_n, normalize, tokenize
 
 
 data = input()
