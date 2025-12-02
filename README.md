@@ -768,6 +768,102 @@ def test_top_tie_breaker():
 ![black](/images/Lab07.black.png)
 ![testjson](/images/LAB07.TESTJSON.png)
 ![testtext](/images/LAB07.TESTTEXT.png)
+____________________________________________________________________________________________________________________________________________________________________________
+LAB08
+```python
+from datetime import datetime, date
+from dataclasses import dataclass
 
 
 
+
+@dataclass
+class Student:
+    fio: str
+    birthdate: str
+    group: str
+    gpa: float
+
+    def __post_init__(self):
+        try:
+            datetime.strptime(self.birthdate, "%Y/%m/%d")
+        except ValueError:
+            raise ValueError("warning: birthdate format might be invalid")
+        
+        if not (0 <= self.gpa <= 5):
+            raise ValueError("gpa must be between 0 and 5")
+
+    def age(self) -> int:
+    
+        b = datetime.strptime(self.birthdate, "%Y/%m/%d")
+        today = date.today()
+        return today.year - b.year
+
+    def to_dict(self) -> dict:
+        return {
+            "fio": self.fio,
+            "birthdate": self.birthdate,
+            "gpa": self.gpa,
+            "group": self.group
+        }
+
+    @classmethod
+    def from_dict(cls, d: dict):
+        if "fio" not in d.keys():
+            raise ValueError("fio is required")
+        if "birthdate" not in d.keys():
+            raise ValueError("birthdate is required")
+        if "group" not in d.keys(): 
+            raise ValueError("group is required")
+        if "gpa" not in d.keys():
+            raise ValueError("gpa is required")
+        return cls(
+            fio=d["fio"],
+            birthdate=d["birthdate"],
+            group=d["group"],
+            gpa=d["gpa"]
+        )
+
+    def __str__(self):
+        return  f"{self.fio}, {self.birthdate}, {self.group}, {self.gpa}"
+
+```
+
+
+
+
+
+
+
+
+```python
+import json
+from src.lab08.models import Student
+
+def students_to_json(students: list[Student], path: str):
+    data = []
+    for elm in students:
+        data.append(elm.to_dict())
+
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
+
+def students_from_json(path: str) -> list[Student]:
+    with open(path, "r", encoding="utf-8") as f:
+        data = json.load(f)
+
+
+    result = []
+    for elm in data:
+        try:
+            student = Student.from_dict(elm)
+            result.append(student)
+        except ValueError:
+            continue
+
+        
+    return result
+
+```
+![lab08](/images/lab08..png)
+![lab08](/images/lab08.png)
